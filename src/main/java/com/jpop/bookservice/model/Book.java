@@ -1,4 +1,4 @@
-package com.epam.sk.bookservice.model;
+package com.jpop.bookservice.model;
 
 import javax.persistence.*;
 

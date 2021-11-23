@@ -1,7 +1,7 @@
-package com.epam.sk.bookservice.controller;
+package com.jpop.bookservice.controller;
 
-import com.epam.sk.bookservice.model.Book;
-import com.epam.sk.bookservice.repository.BookRepository;
+import com.jpop.bookservice.model.Book;
+import com.jpop.bookservice.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,38 +13,38 @@ import java.util.Optional;
 public class BookController {
 
     @Autowired
-    BookRepository bookRepository;
+    BookService bookService;
 
     @GetMapping("books")
     List<Book> getAllBooks(){
-        return bookRepository.findAll();
+        return bookService.findAll();
     }
 
     @GetMapping("books/{id}")
     Optional<Book> getBooksById(@PathVariable("id") Long id){
-        return bookRepository.findById(id);
+        return bookService.findById(id);
     }
 
     @PostMapping("books")
     Book addBooks(@RequestBody Book book){
-         return bookRepository.save(book);
+         return bookService.save(book);
     }
 
     @DeleteMapping("books/{id}")
     void deleteBookByID(@PathVariable("id") Long id){
-         bookRepository.deleteById(id);
+        bookService.deleteById(id);
     }
 
     @PutMapping("books/{id}")
     Book updateBooks(@RequestBody Book book,@PathVariable("id") Long id){
-        Optional<Book> entity =  bookRepository.findById(id);
+        Optional<Book> entity =  bookService.findById(id);
         if(entity.isPresent()){
            Book object =  entity.get();
             object.setAuthor(book.getAuthor());
             object.setCategory(book.getCategory());
             object.setDescription(book.getDescription());
             object.setTitle(book.getTitle());
-            return bookRepository.save(object);
+            return bookService.save(object);
         }else
             return null;
     }
